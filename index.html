@@ -1,87 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <!-- Basic Page Needs
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8">
-    <title>zaden@zadenm.dev</title>
-    <meta name="description" content="">
-    <meta name="author" content="Zaden Maestas">
-
-    <!-- Mobile Specific Metas
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!--SEO Meta Tags-->
-    <meta name="title" content="Zaden's Portfolio">
-    <meta name="description" content="This is the portfolio site of Zaden Maestas">
-    <meta name="keywords"
-          content="Zaden, ZadenM, ZadenMaestas, Zaden Maestas, TheProtonDev, ProtonDev, Proton, Proton software dev, proton github, protondev github, devicesync protondev, devicesync">
-    <meta name="robots" content="index, follow">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="language" content="English">
-    <meta name="revisit-after" content="3 days">
+    <title>Zaden Maestas | Backend-Focused Portfolio</title>
+    <meta name="description" content="Portfolio site for Zaden Maestas, a Colorado-based developer focused on backend systems, Linux, and practical web projects.">
     <meta name="author" content="Zaden Maestas">
+    <meta name="keywords" content="Zaden Maestas, backend developer, Linux, portfolio, Python, JavaScript, Node.js">
+    <meta name="robots" content="index, follow">
 
-    <!-- FONT
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
-    <!-- CSS
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/skeleton.css">
     <link rel="stylesheet" href="css/style.css">
-
-    <!-- Favicon
-    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="icon" type="image/ico" href="images/favicon.ico">
-
 </head>
 <body>
+<div class="page-shell">
+    <header class="topbar">
+        <a class="brand" href="#home">
+            <span class="brand-mark">ZM</span>
+            <span class="brand-copy">
+                <strong>Zaden Maestas</strong>
+                <span>Backend developer and Linux enthusiast</span>
+            </span>
+        </a>
+        <nav class="topnav" aria-label="Primary">
+            <a href="#about">About</a>
+            <a href="#industry">Industry readiness</a>
+            <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <button class="button button-outline terminal-launch" type="button" data-open-terminal aria-controls="terminalPanel" aria-expanded="false">
+            Open terminal mode
+        </button>
+    </header>
 
-<!-- Primary Page Layout
-–––––––––––––––––––––––––––––––––––––––––––––––––– -->
-<div class="container">
-    <p>
-        <br>
-        zaden@zadenm.dev
-        <br>
-        ------------------
-        <br>
-        Name: <span class="accentSpan">Zaden Maestas</span>
-        <br>
-        Based In: <span class="accentSpan">Colorado</span>
-        <br>
-        Keywords: <span class="accentSpan">High School Student</span>, <span
-            class="accentSpan">Hobbyist Programmer</span>,
-        <span class="accentSpan">Aspiring Software Developer</span>, <span class="accentSpan">Tech Nerd</span>, <span
-            class="accentSpan">Linux Enthusiast</span>
-        <br>
-        Preferred OS: <span class="accentSpan">Arch Linux</span>
-        <br>
-        Current Date: <span id="dateBox" class="accentSpan"></span>
-        <br>
-        Programming Since: <span class="accentSpan">2019</span>
-        <br>
-        MOTD: <span class="accentSpan">Welcome to my personal portfolio, you can navigate the site by running commands much like a terminal. You can get started by running <span class="consoleHighlightInfo">'help'</span> or <span class="consoleHighlightInfo">'quickview'</span> if you're just trying to learn more about me</span>
-        <br>
-        <br>
-    <p><span class="accentSpan">Quick Commands: </span>help, clr, clear</p>
-    <p class="cursorParagraphLine">zaden@zadenm.dev ~> <input id="cursorInput" spellcheck="false" autocomplete="off" type="text">
-    <p>
+    <main>
+        <section class="hero" id="home">
+            <div class="hero-copy">
+                <p class="eyebrow">Colorado-based portfolio</p>
+                <h1>Practical software, clean interfaces, and backend-first thinking.</h1>
+                <p class="lede">
+                    I’m Zaden Maestas. I build web projects with a focus on reliability, automation, and the kind of
+                    engineering that makes everyday tools feel calm and easy to use.
+                </p>
+                <div class="hero-actions">
+                    <a class="button button-primary" href="#projects">View projects</a>
+                    <a class="button button-secondary" href="mailto:zadenmaestasdev@gmail.com">Email me</a>
+                </div>
+                <dl class="stats-grid" aria-label="Quick facts">
+                    <div>
+                        <dt>Based in</dt>
+                        <dd>Colorado</dd>
+                    </div>
+                    <div>
+                        <dt>Programming since</dt>
+                        <dd>2019</dd>
+                    </div>
+                    <div>
+                        <dt>Preferred stack</dt>
+                        <dd>Python, JS, Bash</dd>
+                    </div>
+                    <div>
+                        <dt>Working style</dt>
+                        <dd>Linux-first</dd>
+                    </div>
+                </dl>
+            </div>
+
+            <aside class="hero-card">
+                <img class="profile-photo" src="images/profile_picture.png" alt="Portrait of Zaden Maestas">
+                <div class="hero-card-content">
+                    <p class="card-kicker">Available for portfolio review</p>
+                    <p class="card-kicker">Updated <span id="currentDate"></span></p>
+                    <h2>Focused on tools people actually want to use.</h2>
+                    <p>
+                        The site used to lean heavily into a terminal theme. That still shows up as an optional mode,
+                        but the default experience is now built for clarity, accessibility, and broader appeal.
+                    </p>
+                    <ul class="tag-list" aria-label="Highlights">
+                        <li>Backend systems</li>
+                        <li>Web interfaces</li>
+                        <li>Linux workflows</li>
+                    </ul>
+                </div>
+            </aside>
+        </section>
+
+        <section class="content-section" id="about">
+            <div class="section-heading">
+                <p class="eyebrow">About</p>
+                <h2>What I care about</h2>
+            </div>
+            <div class="card-grid">
+                <article class="info-card">
+                    <h3>Backend-first</h3>
+                    <p>
+                        I like building systems that are predictable, maintainable, and easy to reason about before
+                        they are flashy.
+                    </p>
+                </article>
+                <article class="info-card">
+                    <h3>Linux-friendly</h3>
+                    <p>
+                        My background on Linux shaped how I think about tooling, scripting, and working efficiently
+                        from the command line.
+                    </p>
+                </article>
+                <article class="info-card">
+                    <h3>Student mindset</h3>
+                    <p>
+                        I’m still learning constantly, which keeps my work practical, iterative, and open to better
+                        patterns as I find them.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-section" id="industry">
+            <div class="section-heading">
+                <p class="eyebrow">Industry readiness</p>
+                <h2>What I’d bring to a team</h2>
+            </div>
+            <div class="card-grid">
+                <article class="info-card">
+                    <h3>Readable work</h3>
+                    <p>
+                        I tend to write code and projects that are easy to revisit, which matters when other people
+                        need to maintain them later.
+                    </p>
+                </article>
+                <article class="info-card">
+                    <h3>Practical communication</h3>
+                    <p>
+                        I can explain what I built, what tradeoffs I made, and what I’d change next, which is useful
+                        in interviews and on teams.
+                    </p>
+                </article>
+                <article class="info-card">
+                    <h3>Self-directed learning</h3>
+                    <p>
+                        Being self-taught means I’m used to finding answers, filling gaps, and shipping through
+                        ambiguity without waiting for perfect instructions.
+                    </p>
+                </article>
+            </div>
+            <div class="readiness-strip">
+                <div>
+                    <p class="project-label">Open to</p>
+                    <p>Internships, junior backend roles, and project-based opportunities.</p>
+                </div>
+                <div>
+                    <p class="project-label">Best proof</p>
+                    <p>GitHub, shipped sites, clean communication, and a willingness to keep improving.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="experience">
+            <div class="section-heading">
+                <p class="eyebrow">Experience</p>
+                <h2>Professional background</h2>
+            </div>
+            <article class="info-card experience-card">
+                <div class="experience-header">
+                    <div>
+                        <h3>Intern Software Developer</h3>
+                        <p class="project-label">DenverPCTech</p>
+                        <p class="experience-dates">2023 - 2024</p>
+                    </div>
+                    <p class="experience-meta">Websites and backend development</p>
+                </div>
+                <p>
+                    Worked as an intern software developer at DenverPCTech, developing websites and backend
+                    systems for smaller companies in the area and meeting customer deliverables through custom
+                    solutions tailored to their needs.
+                </p>
+            </article>
+        </section>
+
+        <section class="content-section" id="projects">
+            <div class="section-heading">
+                <p class="eyebrow">Projects</p>
+                <h2>Portfolio snapshots</h2>
+            </div>
+            <div class="project-grid">
+                <article class="project-card">
+                    <p class="project-label">GitHub</p>
+                    <h3>Open-source experiments</h3>
+                    <p>
+                        A collection of small tools, website experiments, and backend ideas that show how I like to
+                        learn by building.
+                    </p>
+                    <a href="https://github.com/ZadenMaestas" target="_blank" rel="noreferrer">View GitHub</a>
+                </article>
+                <article class="project-card">
+                    <p class="project-label">Systems</p>
+                    <h3>Automation and utility work</h3>
+                    <p>
+                        Scripts and helpers that reduce repetitive work and keep projects easier to maintain over
+                        time.
+                    </p>
+                    <button class="text-button" type="button" data-open-terminal aria-controls="terminalPanel" aria-expanded="false">See command mode</button>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-section" id="skills">
+            <div class="section-heading">
+                <p class="eyebrow">Skills</p>
+                <h2>Tools I reach for</h2>
+            </div>
+            <div class="skill-cloud" aria-label="Skill list">
+                <span>Python</span>
+                <span>JavaScript</span>
+                <span>Node.js</span>
+                <span>HTML &amp; CSS</span>
+                <span>Bash</span>
+                <span>C++</span>
+                <span>Processing</span>
+                <span>PHP</span>
+            </div>
+        </section>
+
+        <section class="contact-banner" id="contact">
+            <div>
+                <p class="eyebrow">Contact</p>
+                <h2>Want to talk about a project or opportunity?</h2>
+                <p>
+                    I’m easiest to reach by email, but GitHub is the quickest way to see what I’ve been working on.
+                </p>
+            </div>
+            <div class="contact-actions">
+                <a class="button button-primary" href="mailto:zadenmaestasdev@gmail.com">zadenmaestasdev@gmail.com</a>
+                <a class="button button-secondary" href="https://github.com/ZadenMaestas" target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+        </section>
+
+        <section class="terminal-section" id="terminalPanel" hidden>
+            <div class="terminal-shell">
+                <div class="terminal-shell-header">
+                    <div>
+                        <p class="eyebrow eyebrow-light">Optional terminal mode</p>
+                        <h2>For the people who still want the shell vibe</h2>
+                    </div>
+                    <button class="terminal-close" type="button" data-close-terminal>Close</button>
+                </div>
+                <p class="terminal-note">
+                    This is the old interaction style, kept as an accessible opt-in instead of the main experience.
+                </p>
+                <div class="terminal-output" data-terminal-output aria-live="polite"></div>
+                <form class="terminal-form" data-terminal-form>
+                    <label class="sr-only" for="cursorInput">Terminal command</label>
+                    <span class="terminal-prompt">zaden@zadenm.dev ~&gt;</span>
+                    <input id="cursorInput" name="command" autocomplete="off" spellcheck="false" type="text" placeholder="help, about, projects, skills, contact">
+                    <button class="terminal-submit" type="submit">Run</button>
+                </form>
+            </div>
+        </section>
+    </main>
 </div>
-<!-- Jquery Import and Jquery document listeners -->
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"
-        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-<script src="js/jqueryListeners.js" defer></script>
 
-<!-- Other Javascript Vital To Page Functionality -->
-<script src="js/commandListener.js"></script>
-<script src="js/utils.js"></script>
-
-<!-- End Document
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<script src="js/utils.js" defer></script>
+<script src="js/commandListener.js" defer></script>
 </body>
 </html>

@@ -1,34 +1,28 @@
-function getDate() {
+function getCurrentDateString() {
     const date = new Date();
-    document.getElementById("dateBox").innerText += `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
+    return date.toLocaleDateString(undefined, {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+    });
 }
 
-function newCMDPrompt() {
-    const element = `<p class="textInput">zaden@zadenm.dev ~>     <input autocomplete="off" spellcheck="false" id="cursorInput" type="text"> <p>`
-    document.getElementsByClassName("container")[0].insertAdjacentHTML("beforeEnd", element)
-    document.getElementById("cursorInput").focus()
+function escapeHtml(value) {
+    return value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
 }
 
+function normalizeCommand(command) {
+    return command.trim().replace(/\s+/g, " ");
+}
 
-function replaceFormerPrompt(processCMD){
-    const inputCommand = document.getElementById("cursorInput").value
-
-    document.getElementById("cursorInput").disabled = true
-    document.getElementById("cursorInput").id += "_disabled"
-    // Get currently used prompt get its value and run value as cmd if processCMD parameter is true and then disable it
-    if (processCMD){
-        processCommand(inputCommand)
-        document.getElementById("cursorInput").focus() // focus in newly created prompt
+document.addEventListener("DOMContentLoaded", () => {
+    const dateTarget = document.getElementById("currentDate");
+    if (dateTarget) {
+        dateTarget.textContent = getCurrentDateString();
     }
-}
-
-function checkForAutoExecParam(){
-    const urlParams = new URLSearchParams(window.location.search);
-    const autoExec = urlParams.get('autoExec');
-    if (autoExec !== null){
-        document.getElementById("cursorInput").value = autoExec
-        document.getElementById("cursorInput").disabled = true
-        document.getElementById("cursorInput").id += "_disabled"
-        processCommand(autoExec)
-    }
-}
+});

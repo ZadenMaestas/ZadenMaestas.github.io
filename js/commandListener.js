@@ -1,73 +1,247 @@
-/**
- * Runs every time tab is pressed while page is focused, if nothing is input will automatically autocomplete 'help' otherwise searches for most fitting CMD
- * @returns {String} String most fitting the search term
- */
-function autoCompleteCMD() {
-    let cmds = getCommandList()
-    let cmdToFind = document.getElementById("cursorInput").value
-    return cmds.find(cmd => cmd.search(cmdToFind) !== -1)
-}
+document.addEventListener("DOMContentLoaded", () => {
+    const terminalPanel = document.getElementById("terminalPanel");
+    const terminalOutput = document.querySelector("[data-terminal-output]");
+    const terminalForm = document.querySelector("[data-terminal-form]");
+    const cursorInput = document.getElementById("cursorInput");
+    const openButtons = document.querySelectorAll("[data-open-terminal]");
+    const closeButton = document.querySelector("[data-close-terminal]");
+    const openLabel = "Open terminal mode";
+    const closeLabel = "Close terminal mode";
 
-function getCommandList() {
-    return ["help", "about", "skills", "projects", "clr", "clear", "contact", "oldsite", "quickview", "echo"]
-}
-
-function processCommand(cmd) {
-    let helpElement = `<p class='accentSpan'>Commands available:</p><p><span class='accentSpan'>help</span><br>Shows the available commands</p>
-<p><span class='accentSpan'>about</span><br>A little bit of background for who I am</p><p><span class='accentSpan'>projects</span><br>My
-    GitHub page with my various projects, feel free to follow me too!</p><p><span class='accentSpan'>skills</span><br>Lists
-    my skill list</p><p><span class='accentSpan'>clear or clr (ctrl+l also supported)</span><br>Clears terminal</p><p>
-    <span class='accentSpan'>oldsite</span><br>Redirects to old portfolio site (unmaintained after 5/22/2023, purely linked for archival purposes)</p>`
-    let aboutElement = `<p class='accentSpan'>Hello,</p><p>I'm Zaden Maestas, a computer nerd since early childhood which sparked my passion for programming, I'm also a music enthusiast, and a very passionate programmer</p>`
-    let skillsElement = `<p class='accentSpan'>I'm experienced in: </p><p>- Python</p><p>- Javascript & NodeJS</p><p>- HTML and CSS</p>
-<p class='accentSpan'>I'm familiar with: </p><p>- C++</p><p>- Processing</p><p>- PHP</p><p>- Bash</p>`
-    let projectsElement = `<p class='accentSpan'>My Projects:</p><p></p><a href="https://github.com/ZadenMaestas" target="_blank">https://github.com/ZadenMaestas</a><p></p>`
-    let contactElement = `<p class='accentSpan'>Contact Me:</p><p></p><a href="mailto:zadenmaestasdev@gmail.com" target="_blank">Email | zadenmaestasdev@gmail.com</a><p></p>`
-    switch (cmd.toLowerCase()) {
-        case "help":
-            document.getElementsByClassName("container")[0].insertAdjacentHTML("beforeEnd", helpElement)
-            break
-        case "about":
-            document.getElementsByClassName("container")[0].insertAdjacentHTML("beforeEnd", aboutElement)
-            break
-        case "quickview":
-            processCommand("about");
-            processCommand("contact");
-            processCommand("projects");
-            replaceFormerPrompt()
-            replaceFormerPrompt()
-            return
-        case "skills":
-            document.getElementsByClassName("container")[0].insertAdjacentHTML("beforeEnd", skillsElement)
-            break
-        case "projects":
-            document.getElementsByClassName("container")[0].insertAdjacentHTML("beforeEnd", projectsElement)
-            break
-        case "clear":
-            location.href = location.pathname
-            break
-        case "clr":
-            location.href = location.pathname
-            break
-        case "contact":
-            document.getElementsByClassName("container")[0].insertAdjacentHTML("beforeEnd", contactElement)
-            break
-        case "oldsite":
-            window.open('https://zadenmaestasdev.software/oldsite/', '_blank');
-            break
-        default:
-            if (cmd.search("echo") !== -1) {
-                let toEcho = cmd.replace("echo", "")
-                // Easter egg
-                if (toEcho.toLowerCase().search("hello there") !== -1){
-                    document.getElementsByClassName("container")[0].insertAdjacentHTML("beforeEnd", `<img alt="Obi-Wan Kenobi Saying 'Hello There'" width="480" height="240" src="/images/obiWanHelloThere.gif">`)
-                } else {
-                    document.getElementsByClassName("container")[0].insertAdjacentHTML("beforeEnd", `<p>${toEcho}</p>`)
-                }
-            } else {
-                document.getElementsByClassName("container")[0].insertAdjacentHTML("beforeEnd", `<p style="color: red;">Error: ${cmd.toLowerCase()} is not a valid command. Please run <span class="accentSpan">'help'</span> to get available commands</p>`)
-            }
+    if (!terminalPanel || !terminalOutput || !terminalForm || !cursorInput) {
+        return;
     }
-    newCMDPrompt()
-    document.getElementById("cursorInput").scrollIntoView()
-}
+
+    function syncLauncherState(isOpen) {
+        openButtons.forEach((button) => {
+            button.setAttribute("aria-expanded", String(isOpen));
+            button.textContent = isOpen ? closeLabel : openLabel;
+        });
+    }
+
+    const commands = [
+        "help",
+        "about",
+        "projects",
+        "skills",
+        "contact",
+        "clr",
+        "clear",
+        "quickview",
+        "echo",
+    ];
+
+    const responses = {
+        help: [
+            "<strong>Available commands:</strong>",
+            "about - Short background about me",
+            "projects - Links and project snapshots",
+            "skills - My current stack",
+            "contact - Email and GitHub links",
+            "clear / clr - Reset this panel",
+        ],
+        about: [
+            "<strong>About:</strong>",
+            "I’m Zaden Maestas, a developer who likes practical software, backend systems, and Linux-friendly workflows.",
+        ],
+        projects: [
+            "<strong>Projects:</strong>",
+            "GitHub: https://github.com/ZadenMaestas",
+        ],
+        skills: [
+            "<strong>Skills:</strong>",
+            "Python, JavaScript, Node.js, HTML, CSS, Bash, C++, PHP, Processing",
+        ],
+        contact: [
+            "<strong>Contact:</strong>",
+            "zadenmaestasdev@gmail.com",
+        ],
+    };
+
+    function openTerminal(focusInput = true) {
+        terminalPanel.hidden = false;
+        syncLauncherState(true);
+        terminalPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (focusInput) {
+            window.setTimeout(() => cursorInput.focus(), 50);
+        }
+    }
+
+    function closeTerminal() {
+        terminalPanel.hidden = true;
+        syncLauncherState(false);
+    }
+
+    function toggleTerminal() {
+        if (terminalPanel.hidden) {
+            openTerminal();
+            return;
+        }
+
+        closeTerminal();
+    }
+
+    function clearOutput() {
+        terminalOutput.innerHTML = "";
+        renderSystemLine("Terminal reset. Type help to see available commands.");
+    }
+
+    function renderSystemLine(text, className = "") {
+        const line = document.createElement("p");
+        line.className = `terminal-line ${className}`.trim();
+        line.innerHTML = text;
+        terminalOutput.appendChild(line);
+    }
+
+    function renderPromptLine(command) {
+        renderSystemLine(`<strong>zaden@zadenm.dev ~&gt;</strong> ${escapeHtml(command)}`);
+    }
+
+    function runQuickView() {
+        renderResponse("about");
+        renderResponse("contact");
+        renderResponse("projects");
+    }
+
+    function renderResponse(command) {
+        const lines = responses[command];
+        if (!lines) {
+            renderSystemLine(`Error: ${escapeHtml(command)} is not a valid command. Try help.`, "error");
+            return;
+        }
+
+        lines.forEach((line) => renderSystemLine(line));
+    }
+
+    function handleEcho(command) {
+        const text = command.slice(4).trim();
+        if (!text) {
+            renderSystemLine("Usage: echo your message here", "error");
+            return;
+        }
+
+        if (text.toLowerCase().includes("hello there")) {
+            const image = document.createElement("img");
+            image.src = "/images/obiWanHelloThere.gif";
+            image.alt = "Obi-Wan Kenobi saying hello there";
+            image.style.maxWidth = "100%";
+            image.style.borderRadius = "16px";
+            terminalOutput.appendChild(image);
+            return;
+        }
+
+        renderSystemLine(escapeHtml(text));
+    }
+
+    function processCommand(rawCommand) {
+        const command = normalizeCommand(rawCommand).toLowerCase();
+
+        if (!command) {
+            return;
+        }
+
+        renderPromptLine(rawCommand);
+
+        switch (command) {
+            case "help":
+                renderResponse("help");
+                break;
+            case "about":
+                renderResponse("about");
+                break;
+            case "projects":
+                renderResponse("projects");
+                break;
+            case "skills":
+                renderResponse("skills");
+                break;
+            case "contact":
+                renderResponse("contact");
+                break;
+            case "quickview":
+                runQuickView();
+                break;
+            case "clear":
+            case "clr":
+                clearOutput();
+                break;
+            default:
+                if (command.startsWith("echo")) {
+                    handleEcho(rawCommand);
+                } else {
+                    renderSystemLine(`Error: ${escapeHtml(rawCommand)} is not a valid command. Try help.`, "error");
+                }
+        }
+    }
+
+    function autoCompleteCommand() {
+        const current = normalizeCommand(cursorInput.value).toLowerCase();
+        const match = commands.find((cmd) => cmd.startsWith(current));
+        if (match) {
+            cursorInput.value = match;
+        }
+    }
+
+    function checkAutoExecParam() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const autoExec = urlParams.get("autoExec");
+        if (!autoExec) {
+            return;
+        }
+
+        openTerminal(false);
+        clearOutput();
+        processCommand(autoExec);
+    }
+
+    function seedWelcome() {
+        renderSystemLine("<strong>Optional terminal mode</strong>");
+        renderSystemLine("Use this panel if you want the old command-driven layout.");
+        renderSystemLine("Try help, quickview, or contact.");
+    }
+
+    syncLauncherState(false);
+
+    openButtons.forEach((button) => {
+        button.addEventListener("click", toggleTerminal);
+    });
+
+    if (closeButton) {
+        closeButton.addEventListener("click", closeTerminal);
+    }
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !terminalPanel.hidden) {
+            closeTerminal();
+            openButtons[0]?.focus();
+        }
+    });
+
+    terminalForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        processCommand(cursorInput.value);
+        cursorInput.value = "";
+        cursorInput.focus();
+    });
+
+    cursorInput.addEventListener("keydown", (event) => {
+        if (event.key === "Tab") {
+            event.preventDefault();
+            autoCompleteCommand();
+        }
+
+        if (event.ctrlKey && event.key.toLowerCase() === "l") {
+            event.preventDefault();
+            clearOutput();
+        }
+    });
+
+    seedWelcome();
+    document.addEventListener("click", (event) => {
+        if (!terminalPanel.hidden && !terminalPanel.contains(event.target) && !event.target.matches("[data-open-terminal]")) {
+            cursorInput.focus();
+        }
+    });
+
+    checkAutoExecParam();
+});
